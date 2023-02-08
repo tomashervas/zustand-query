@@ -3,7 +3,7 @@ import { Repository } from './interfaces'
 
 import './App.css'
 import Card from './components/Card'
-import { useFavouriteRepos } from './store/favoriteRepos'
+import { useFavoriteRepos } from './store/favoriteRepos'
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
 
   const { isLoading, data } = useQuery(['repos'], getRepos)
 
-  const {idsFav}  = useFavouriteRepos()
+  const {idsFav}  = useFavoriteRepos()
 
   // if (!isLoading) {
   //   console.log(data)
@@ -25,7 +25,17 @@ function App() {
     <div className="App">
       <h3>RepositoriosApp con Zustand y React Query</h3>
       {isLoading && <p>Loading...</p>}
-      <p>{idsFav}</p>
+      {idsFav.length > 0 && (
+        <div>
+          <h3>Favoritos</h3>
+          <ul>
+            {idsFav.map((id) => {
+              const repo = data?.find((repo) => repo.id === id)
+              return <li key={id}>{repo?.name}</li>
+              })}
+          </ul> 
+        </div>
+      )}
       {data && (
         <ul>
           {data.map((repo) => (

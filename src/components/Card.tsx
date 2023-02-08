@@ -1,5 +1,5 @@
 import { Repository } from "../interfaces"
-import { useFavouriteRepos } from "../store/favoriteRepos"
+import { useFavoriteRepos } from "../store/favoriteRepos"
 
 type Props = {
     repo: Repository,
@@ -8,7 +8,7 @@ type Props = {
 
 const Card = ({repo, isFavourite}: Props) => {
 
-    const {addFavorite, removeFavorite} = useFavouriteRepos()
+    const {addFavorite, removeFavorite} = useFavoriteRepos()
 
     const addRemoveFavourite = () => {
         if (isFavourite) removeFavorite(repo.id)
