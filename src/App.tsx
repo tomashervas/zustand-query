@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Repository } from './interfaces'
 
 import './App.css'
+import Card from './components/Card'
+import { useFavouriteRepos } from './store/favoriteRepos'
 
 function App() {
 
@@ -11,7 +13,9 @@ function App() {
     return data
   }
 
-  const { isLoading, error, data } = useQuery(['repos'], getRepos)
+  const { isLoading, data } = useQuery(['repos'], getRepos)
+
+  const {idsFav}  = useFavouriteRepos()
 
   // if (!isLoading) {
   //   console.log(data)
@@ -19,12 +23,14 @@ function App() {
 
   return (
     <div className="App">
-
+      <h3>RepositoriosApp con Zustand y React Query</h3>
       {isLoading && <p>Loading...</p>}
+      <p>{idsFav}</p>
       {data && (
         <ul>
           {data.map((repo) => (
-            <li key={repo.id}>{repo.name}</li>
+            <Card key={repo.id} repo={repo} 
+            isFavourite={idsFav.includes(repo.id)}/>
           ))}
         </ul>
       )}
